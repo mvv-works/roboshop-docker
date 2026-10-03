@@ -19,6 +19,7 @@ services:
     depends_on:
       - catalogue
       - user
+      - cart
   user:
     build: ./user
     image: joindevops/user:v1
@@ -30,6 +31,7 @@ services:
     depends_on:
       - redis
       - mongodb
+
   cart:
     build: ./cart
     image: joindevops/cart:v1
@@ -41,6 +43,7 @@ services:
     depends_on:
       - redis
       - catalogue
+
   redis:
     image: redis:7
     container_name: redis # docker run -d --name redis --network roboshop redis:7 
