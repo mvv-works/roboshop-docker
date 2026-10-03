@@ -20,6 +20,8 @@ services:
       - catalogue
       - user
       - cart
+      - shipping
+      - payment
   user:
     build: ./user
     image: joindevops/user:v1
@@ -65,6 +67,28 @@ services:
     command: --mysql-native-password=ON --innodb-lock_wait_timeout=120
     environment:
       MYSQL_ROOT_PASSWORD: "RoboShop@1"
+  rabbitmq:
+    image: rabbitmq:3
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: roboshop
+      RABBITMQ_DEFAULT_PASS: roboshop123
+  payment:
+    build: ./payment
+    image: joindevops/payment:v1
+    container_name: payment
+    environment:
+      CART_HOST: "cart"
+      CART_PORT: 8080
+      USER_HOST: user
+      USER_PORT: 8080
+      AMQP_HOST: rabbitmq
+      AMQP_USER: roboshop
+      AMQP_PASS: roboshop123
+    depends_on:
+      - cart
+      - user
+      - rabbitmq
 
 networks:
   default:
