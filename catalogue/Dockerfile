@@ -1,4 +1,4 @@
-FROM node:20
+FROM node:24.20.0-alpine3.24
 # create /app and set the directory to /app
 WORKDIR /app
 COPY package.json .
