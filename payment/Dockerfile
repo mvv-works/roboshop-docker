@@ -3,7 +3,7 @@ WORKDIR /app
 COPY requirements.txt .
 # COPY payment.ini .
 # COPY *.py .
-RUN app add --no-cache --virtual .build-deps gcc musl-dev linux-headers python3-dev \
+RUN apk add --no-cache --virtual .build-deps gcc musl-dev linux-headers python3-dev \
     && pip3 install --prefix=/install -r requirements.txt \
     && apk del .build-deps
 
